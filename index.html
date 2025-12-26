@@ -4,32 +4,23 @@
   <meta charset="utf-8" />
   <title>Fatine Dabbarh Scroll</title>
   <link rel="icon" type="image/png" href="favicon2.png">
-  <style>
-    .page {
-  margin: 0;         /* remove any margin */
-  padding: 0;        /* remove padding */
+
+<style>
+/* ---- GENERAL LAYOUT ---- */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background: white;
+  line-height: 0;
 }
-body {
-  line-height: 0;    /* prevents whitespace between images */
+.page img {
+  width: 100%;
+  display: block;
+  max-width: 100vw;
 }
-    html, body {
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
-    }
-    .page {
-      width: 100%;
-      max-width: 100vw;
-      margin: 0 auto;
-    }
-    .page img {
-      width: 100%;
-      height: auto;
-      display: block;
-      max-width: 100vw;
-    }
-    <style>
-/* MODAL BIO POPUP */
+
+/* ---- BIO MODAL ---- */
 .modal-menu {
   display: none;
   position: fixed;
@@ -40,6 +31,10 @@ body {
   align-items: center;
   z-index: 9999;
   padding: 40px;
+}
+
+.modal-menu.show {
+  display: flex;
 }
 
 .modal-inside {
@@ -53,82 +48,60 @@ body {
   overflow-y: auto;
 }
 
-/* open modal class */
-.modal-menu.show {
-  display: flex;
-}
-
-/* Button styling (customize later) */
+/* ---- "+" BUTTON LIKE WILLAUME ---- */
 #bio-btn {
   position: fixed;
-  top: 20px;
-  right: 20px;
-  background: black;
-  color: white;
-  padding: 10px 16px;
+  top: 25px;
+  right: 25px;
+  font-size: 28px;
+  font-weight: 300;
   cursor: pointer;
-  font-size: 14px;
-  border-radius: 4px;
-  z-index: 99999;
+  color: black;
+  background: none;
+  border: none;
+  z-index: 10000;
+  line-height: 1;
 }
-
-#bio-btn:hover {
-  opacity: 0.8;
-}
+#bio-btn:hover { opacity: 0.5; }
 </style>
 
 <script>
 function openBio(){ document.querySelector('.modal-menu').classList.add('show'); }
 function closeBio(){ document.querySelector('.modal-menu').classList.remove('show'); }
 </script>
-
-  </style>
 </head>
+
 <body>
 
-  <img class="page" loading="lazy" src="image/Fatine_Dabbarh_Draft_Scroll_2611.webp">
-  <img class="page" loading="lazy" src="image/Fatine_Dabbarh_Draft_Scroll_26112.webp">
-  <img class="page" loading="lazy" src="image/Fatine_Dabbarh_Draft_Scroll_26113.webp">
-  <img class="page" loading="lazy" src="image/Fatine_Dabbarh_Draft_Scroll_26114.webp">
-  <img class="page" loading="lazy" src="image/Fatine_Dabbarh_Draft_Scroll_26115.webp">
-  <img class="page" loading="lazy" src="image/Fatine_Dabbarh_Draft_Scroll_26116.webp">
-  <img class="page" loading="lazy" src="image/Fatine_Dabbarh_Draft_Scroll_26117.webp">
-  <img class="page" loading="lazy" src="image/Fatine_Dabbarh_Draft_Scroll_26118.webp">
-  <img class="page" loading="lazy" src="image/Fatine_Dabbarh_Draft_Scroll_26119.webp">
-  <img class="page" loading="lazy" src="image/Fatine_Dabbarh_Draft_Scroll_261110.webp">
+<!-- IMAGES -->
+<img class="page" loading="lazy" src="image/Fatine_Dabbarh_Draft_Scroll_2611.webp">
+<img class="page" loading="lazy" src="image/Fatine_Dabbarh_Draft_Scroll_26112.webp">
+<img class="page" loading="lazy" src="image/Fatine_Dabbarh_Draft_Scroll_26113.webp">
+<img class="page" loading="lazy" src="image/Fatine_Dabbarh_Draft_Scroll_26114.webp">
+<img class="page" loading="lazy" src="image/Fatine_Dabbarh_Draft_Scroll_26115.webp">
+<img class="page" loading="lazy" src="image/Fatine_Dabbarh_Draft_Scroll_26116.webp">
+<img class="page" loading="lazy" src="image/Fatine_Dabbarh_Draft_Scroll_26117.webp">
+<img class="page" loading="lazy" src="image/Fatine_Dabbarh_Draft_Scroll_26118.webp">
+<img class="page" loading="lazy" src="image/Fatine_Dabbarh_Draft_Scroll_26119.webp">
+<img class="page" loading="lazy" src="image/Fatine_Dabbarh_Draft_Scroll_261110.webp">
 
-  <!-- Bio Button -->
-<div id="bio-btn" onclick="openBio()">Biography</div>
+<!-- "+" BUTTON -->
+<button id="bio-btn" onclick="openBio()">+</button>
 
-<!-- Modal -->
+<!-- MODAL -->
 <div class="modal-menu" onclick="closeBio()">
   <div class="modal-inside" onclick="event.stopPropagation()">
-    
+
     <h2>Fatine Dabbarh</h2>
-    <p>
-      Née à Rabat en 1970, Fatine quitte le Maroc pour poursuivre des études littéraires à Paris IV–Sorbonne, où elle se passionne pour l’art et l’histoire de l’art.
+    <p>Née à Rabat en 1970, Fatine quitte le Maroc pour poursuivre des études littéraires à Paris IV–Sorbonne, où elle se passionne pour l’art et l’histoire de l’art.</p>
+    <p>Au fil des années, ses rencontres nourrissent une vision personnelle de la création. C’est auprès de l’artiste Sylvie Berrault qu’elle découvre sa voie dans la peinture abstraite et la sculpture.</p>
+    <p>Installée aujourd’hui à La Chaux-de-Fonds, elle explore les liens entre matière, texture et émotion. Ses tableaux, nourris d’opéra et d’intensité, invitent à un voyage intérieur où la couleur devient langage et la matière, mémoire.</p>
+    <p>Elle a exposé notamment à la Galerie Artémis en 2024.</p>
 
-Au fil des années, ses rencontres avec des artistes et critiques nourrissent une vision personnelle de la création.
-C’est auprès de l’artiste Sylvie Berrault qu’elle découvre, dans les années 2010, sa voie dans la peinture abstraite et la sculpture.
-Installée aujourd’hui à La Chaux-de-Fonds, Fatine explore les liens entre matière, texture et émotion, cherchant dans chaque œuvre un équilibre entre intériorité et mouvement.
-
-Ses tableaux, nourris d’opéra et d’intensité, invitent à un voyage intérieur où la couleur devient langage et la matière, mémoire.
-Elle a exposé notamment à la Galerie Artémis en 2024.
-    </p>
-
-    <p>
-      You can also add links:<br>
-      <a href="mailto:fatinedabbarh@gmail.com">fatinedabbarh@gmail.com</a><br>
-      Instagram / Portfolio buttons can also go here.
-    </p>
+    <p><a href="mailto:fatinedabbarh@gmail.com">fatinedabbarh@gmail.com</a></p>
 
   </div>
 </div>
 
 </body>
 </html>
-
-
-
-
-
