@@ -182,14 +182,14 @@ html,body{
 <body>
 
 <!-- COVER (2611) -->
-<div class="page cover">
+<div class="page cover" id="hom">
   <div class="image-frame">
     <img src="image/Fatine_Dabbarh_Draft_Scroll_2611.webp" alt="Cover">
   </div>
 </div>
 
 <!-- SERIES 1 -->
-<div class="page series" data-series="1">
+<div class="page series" id="series1" data-series="1">
   <div class="image-frame">
     <img class="series-image active" src="image/Fatine_Dabbarh_Draft_Scroll_261113.webp" alt="Series 1 - 1">
     <img class="series-image"        src="image/Fatine_Dabbarh_Draft_Scroll_261112.webp" alt="Series 1 - 2">
@@ -199,7 +199,7 @@ html,body{
 </div>
 
 <!-- SERIES 2 -->
-<div class="page series" data-series="2">
+<div class="page series" id="series2" data-series="2">
   <div class="image-frame">
     <img class="series-image active" src="image/Fatine_Dabbarh_Draft_Scroll_26116.webp" alt="Series 2 - 1">
     <img class="series-image"        src="image/Fatine_Dabbarh_Draft_Scroll_26117.webp" alt="Series 2 - 2">
@@ -208,7 +208,7 @@ html,body{
 </div>
 
 <!-- SERIES 3 -->
-<div class="page series" data-series="3">
+<div class="page series" id="series3" data-series="3">
   <div class="image-frame">
     <img class="series-image active" src="image/Fatine_Dabbarh_Draft_Scroll_26112.webp" alt="Series 3 - 1">
     <img class="series-image"        src="image/Fatine_Dabbarh_Draft_Scroll_26113.webp" alt="Series 3 - 2">
@@ -219,7 +219,7 @@ html,body{
 </div>
 
 <!-- SERIES 4 -->
-<div class="page series" data-series="4">
+<div class="page series" id="series4" data-series="4">
   <div class="image-frame">
     <img class="series-image active" src="image/Fatine_Dabbarh_Draft_Scroll_26119.webp" alt="Series 4 - 1">
     <img class="series-image"        src="image/Fatine_Dabbarh_Draft_Scroll_261110.webp" alt="Series 4 - 2">
@@ -228,7 +228,7 @@ html,body{
 </div>
 
   <!-- SERIES 5 -->
-<div class="page series" data-series="5">
+<div class="page series" id="series5" data-series="5">
   <div class="image-frame">
     <img class="series-image active" src="image/Fatine_Dabbarh_Draft_Scroll_261116.webp" alt="Series 5 - 1">
   </div>
@@ -243,8 +243,9 @@ html,body{
 <button id="next-arrow" class="nav-arrow hidden">›</button>
 
 <!-- BIO MODAL -->
-<div id="bio-modal" class="modal-menu">
-  <div class="modal-inside" onclick="event.stopPropagation()">
+<div id="bio"> <!-- anchor target for sitemap -->
+  <div id="bio-modal" class="modal-menu">
+    <div class="modal-inside" onclick="event.stopPropagation()">
     <h2 style="margin-top:0;font-weight:600;">Fatine Dabbarh</h2>
     <p> <br/>
       Née à Rabat en 1970, Fatine quitte le Maroc pour poursuivre des études littéraires à Paris IV–Sorbonne,
@@ -402,6 +403,7 @@ updateArrowsVisibility();
 
 </body>
 </html>
+
 
 
 
