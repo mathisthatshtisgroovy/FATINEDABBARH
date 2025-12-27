@@ -54,12 +54,11 @@ html, body {
 }
 
 /* ---- + BUTTON ---- */
-#bio-btn {
+#bio-btn, #full-btn {
   position: fixed;
-  top: 22px;
-  right: 22px;
-  font-size: 42px;       /* larger */
-  font-weight: 700;      /* thicker */
+  top: 22px;              /* controls alignment together */
+  font-size: 42px;
+  font-weight: 700;
   cursor: pointer;
   color: black;
   background: none;
@@ -67,25 +66,23 @@ html, body {
   z-index: 10000;
   transition: 0.2s;
 }
-#bio-btn:hover { opacity: 0.6; }
-/* FULLPAGE BUTTON (same style as + but left side) */
-#full-btn {
-  position: fixed;
-  top: 22px;
-  left: 22px;
-  font-size: 42px;       /* same size as + */
-  font-weight: 700;      /* same thickness */
-  cursor: pointer;
-  color: black;
-  background: none;
-  border: none;
-  z-index: 10000;
-  transition: 0.2s;
-}
-#full-btn:hover { opacity: 0.6; }
 
-/* -------- FULLPAGE VIEW MODE -------- */
+#bio-btn:hover, #full-btn:hover { opacity: 0.6; }
+
+/* Specific position per side */
+#bio-btn { right: 22px; }
+#full-btn { left: 22px; width: 32px; height: 32px; border: 4px solid black; }
+
+
+/* -------- TRUE FULLPAGE SLIDE MODE -------- */
+body.fullpage {
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  height: 100vh;
+}
+
 body.fullpage .page {
+  scroll-snap-align: start;
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -95,9 +92,9 @@ body.fullpage .page {
 body.fullpage .page img {
   max-height: 100vh;
   width: auto;
-  max-width: 100%;
   object-fit: contain;
 }
+
 
 
 </style>
@@ -178,11 +175,9 @@ function toggleFullPage(){
 }
 </script>
 
-
-  </div>
-</div>
-
-<button id="full-btn" onclick="toggleFullPage()">□</button>
+<!-- FULL PAGE MODE BUTTON -->
+<button id="full-btn" onclick="toggleFullPage()"></button>
 
 </body>
 </html>
+
