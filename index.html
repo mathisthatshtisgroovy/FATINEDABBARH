@@ -1,187 +1,394 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Fatine Dabbarh Scroll</title>
-  <link rel="icon" type="image/png" href="favicon2.png">
+<meta charset="UTF-8">
+<title>Fatine Dabbarh – Paintings</title>
+<link rel="icon" href="favicon2.png">
 
-  <!-- POPPINS FONT -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-/* ---- BASE ---- */
+*{margin:0;padding:0;box-sizing:border-box;}
 
-html, body {
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden; /* prevents left-right scroll */
+html,body{
+  width:100%;
+  height:100%;
+  background:#fff;
+  font-family:'Poppins',sans-serif;
+  overflow-x:hidden;
+  scroll-snap-type:y mandatory;
+  scroll-behavior:smooth;
 }
 
-.page {
-  width: 100%;
-  display: block;
-  margin: 0 auto;
+/* Each vertical page */
+.page{
+  width:100vw;
+  height:100vh;
+  position:relative;
+  overflow:hidden;
+  scroll-snap-align:start;
+  background:#fff;
 }
 
-.page img {
-  width: 100%;
-  height: auto;
-  display: block;
+/* Stable fullscreen frame */
+.image-frame{
+  position:absolute;
+  top:0;left:0;
+  width:100vw;
+  height:100vh;
+  overflow:hidden;
+}
+
+/* Paintings fill screen (with possible crop) */
+.image-frame img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  position:absolute;
+  top:0;left:0;
+}
+
+/* Only one image per series visible */
+.series-image{
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .6s ease;
+}
+.series-image.active{
+  opacity:1;
+  pointer-events:auto;
+}
+
+/* ====== TOP BUTTONS ====== */
+
+/* Bio "+" */
+#bio-btn{
+  position:fixed;
+  top:22px;
+  right:42px;
+  font-size:42px;
+  font-weight:700;
+  background:none;
+  border:none;
+  color:black;
+  cursor:pointer;
+  z-index:3000;
+}
+
+/* Arrow toggle ">" */
+#arrow-toggle-btn{
+  position:fixed;
+  top:52px;
+  left:22px;
+  font-size:42px;
+  font-weight:700;
+  background:none;
+  border:none;
+  color:black;
+  cursor:pointer;
+  z-index:3000;
+}
+
+/* Hover-lock "□" */
+#lock-btn{
+  position:fixed;
+  top:22px;
+  left:14px;
+  width:42px;
+  height:42px;
+  cursor:pointer;
+  z-index:3000;
+  background:none;
+  border:none;
+  padding:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* Square outline */
+#lock-btn::before{
+  content:"";
+  display:block;
+  width:28px;          /* adjusts inner size */
+  height:28px;
+  border:3px solid black; /* thickness option here S/M/B */
+}
+
+/* When active (auto-cycle locked) */
+#lock-btn.active::before{
+  background:black;
+  border-color:black;
 }
 
 
-/* ---- MODAL ---- */
-.modal-menu {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.92);
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  padding: 40px;
+/* ====== ARROWS ====== */
+
+.nav-arrow{
+  position:fixed;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:52px;
+  font-weight:700;
+  background:none;
+  border:none;
+  color:black;
+  cursor:pointer;
+  z-index:2500;
+  transition:opacity .3s ease;
 }
 
-.modal-menu.show { display: flex; }
+#prev-arrow{ left:33%; }
+#next-arrow{ right:33%; }
 
-.modal-inside {
-  max-width: 650px;
-  color: white;
-  font-size: 18px;
-  line-height: 1.6;
-  padding: 35px;
-  border-radius: 8px;
+.nav-arrow.hidden{
+  opacity:0;
+  pointer-events:none;
+}
+.nav-arrow:not(.hidden){
+  opacity:1;
 }
 
-/* ---- + BUTTON ---- */
-#bio-btn, #full-btn {
-  position: fixed;
-  top: 22px;              /* controls alignment together */
-  font-size: 42px;
-  font-weight: 700;
-  cursor: pointer;
-  color: black;
-  background: none;
-  border: none;
-  z-index: 10000;
-  transition: 0.2s;
+/* ====== BIO MODAL ====== */
+
+.modal-menu{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.92);
+  z-index:4000;
+  justify-content:center;
+  align-items:center;
+  padding:40px;
 }
+.modal-menu.show{ display:flex; }
 
-#bio-btn:hover, #full-btn:hover { opacity: 0.6; }
-
-/* Specific position per side */
-#bio-btn { right: 22px; }
-#full-btn { left: 22px; width: 32px; height: 32px; border: 4px solid black; }
-
-
-/* -------- TRUE FULLPAGE SLIDE MODE -------- */
-body.fullpage {
-  scroll-snap-type: y mandatory;
-  overflow-y: scroll;
-  height: 100vh;
+.modal-inside{
+  max-width:650px;
+  color:white;
+  font-size:18px;
+  line-height:1.6;
 }
-
-body.fullpage .page {
-  scroll-snap-align: start;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.modal-inside a{
+  color:#7BC6FF;
+  text-decoration:none;
 }
-
-body.fullpage .page img {
-  max-height: 100vh;
-  width: auto;
-  object-fit: contain;
+.modal-inside a:hover{
+  text-decoration:underline;
 }
-
-
-
 </style>
-
-
-
-<script>
-function openBio(){
-  document.querySelector('.modal-menu').classList.add('show');
-}
-function closeBio(){
-  document.querySelector('.modal-menu').classList.remove('show');
-}
-
-/* ESC closes modal */
-document.addEventListener('keydown', e => {
-  if(e.key === "Escape"){ closeBio(); }
-});
-</script>
 </head>
 
 <body>
 
-<!-- IMAGES -->
-<img class="page" loading="lazy" src="image/Fatine_Dabbarh_Draft_Scroll_2611.webp">
-<img class="page" loading="lazy" src="image/Fatine_Dabbarh_Draft_Scroll_26112.webp">
-<img class="page" loading="lazy" src="image/Fatine_Dabbarh_Draft_Scroll_26113.webp">
-<img class="page" loading="lazy" src="image/Fatine_Dabbarh_Draft_Scroll_26114.webp">
-<img class="page" loading="lazy" src="image/Fatine_Dabbarh_Draft_Scroll_26115.webp">
-<img class="page" loading="lazy" src="image/Fatine_Dabbarh_Draft_Scroll_26116.webp">
-<img class="page" loading="lazy" src="image/Fatine_Dabbarh_Draft_Scroll_26117.webp">
-<img class="page" loading="lazy" src="image/Fatine_Dabbarh_Draft_Scroll_26118.webp">
-<img class="page" loading="lazy" src="image/Fatine_Dabbarh_Draft_Scroll_26119.webp">
-<img class="page" loading="lazy" src="image/Fatine_Dabbarh_Draft_Scroll_261110.webp">
-<img class="page" loading="lazy" src="image/Fatine_Dabbarh_Draft_Scroll_261112.webp">
-<img class="page" loading="lazy" src="image/Fatine_Dabbarh_Draft_Scroll_261111.webp"> 
-<!-- + BUTTON -->
-<button id="bio-btn" onclick="openBio()">+</button>
+<!-- COVER (2611) -->
+<div class="page cover">
+  <div class="image-frame">
+    <img src="image/Fatine_Dabbarh_Draft_Scroll_2611.webp" alt="Cover">
+  </div>
+</div>
 
-<!-- MODAL -->
-<div class="modal-menu" onclick="closeBio()">
+<!-- SERIES 1 -->
+<div class="page series" data-series="1">
+  <div class="image-frame">
+    <img class="series-image active" src="image/Fatine_Dabbarh_Draft_Scroll_26112.webp" alt="Series 1 - 1">
+    <img class="series-image"        src="image/Fatine_Dabbarh_Draft_Scroll_26113.webp" alt="Series 1 - 2">
+    <img class="series-image"        src="image/Fatine_Dabbarh_Draft_Scroll_26114.webp" alt="Series 1 - 3">
+    <img class="series-image"        src="image/Fatine_Dabbarh_Draft_Scroll_26115.webp" alt="Series 1 - 4">
+  </div>
+</div>
+
+<!-- SERIES 2 -->
+<div class="page series" data-series="2">
+  <div class="image-frame">
+    <img class="series-image active" src="image/Fatine_Dabbarh_Draft_Scroll_26116.webp" alt="Series 2 - 1">
+    <img class="series-image"        src="image/Fatine_Dabbarh_Draft_Scroll_26117.webp" alt="Series 2 - 2">
+    <img class="series-image"        src="image/Fatine_Dabbarh_Draft_Scroll_26118.webp" alt="Series 2 - 3">
+  </div>
+</div>
+
+<!-- SERIES 3 -->
+<div class="page series" data-series="3">
+  <div class="image-frame">
+    <img class="series-image active" src="image/Fatine_Dabbarh_Draft_Scroll_26119.webp" alt="Series 3 - 1">
+    <img class="series-image"        src="image/Fatine_Dabbarh_Draft_Scroll_261110.webp" alt="Series 3 - 2">
+    <img class="series-image"        src="image/Fatine_Dabbarh_Draft_Scroll_261111.webp" alt="Series 3 - 3">
+  </div>
+</div>
+
+<!-- SERIES 4 -->
+<div class="page series" data-series="4">
+  <div class="image-frame">
+    <img class="series-image active" src="image/Fatine_Dabbarh_Draft_Scroll_261113.webp" alt="Series 4 - 1">
+    <img class="series-image"        src="image/Fatine_Dabbarh_Draft_Scroll_261112.webp" alt="Series 4 - 2">
+  </div>
+</div>
+
+<!-- UI BUTTONS -->
+<button id="arrow-toggle-btn">×</button>
+<button id="lock-btn"></button>
+<button id="bio-btn">+</button>
+
+<button id="prev-arrow" class="nav-arrow hidden">‹</button>
+<button id="next-arrow" class="nav-arrow hidden">›</button>
+
+<!-- BIO MODAL -->
+<div id="bio-modal" class="modal-menu">
   <div class="modal-inside" onclick="event.stopPropagation()">
-    <h2 style="margin-top:0; font-weight:600;">Fatine Dabbarh</h2>
-    <p>Née à Rabat en 1970, Fatine quitte le Maroc pour poursuivre des études littéraires à Paris IV–Sorbonne, où elle se passionne pour l’art et l’histoire de l’art.
-
-Au fil des années, ses rencontres avec des artistes et critiques nourrissent une vision personnelle de la création.
-C’est auprès de l’artiste Sylvie Berrault qu’elle découvre, dans les années 2010, sa voie dans la peinture abstraite et la sculpture.
-Installée aujourd’hui à La Chaux-de-Fonds, Fatine explore les liens entre matière, texture et émotion, cherchant dans chaque œuvre un équilibre entre intériorité et mouvement.
-
-Ses tableaux, nourris d’opéra et d’intensité, invitent à un voyage intérieur où la couleur devient langage et la matière, mémoire.
-Elle a exposé notamment à la Galerie Artémis en 2024.</p>
-    <p>Email — <a href="mailto:fatinedabbarh@gmail.com" style="color:#7BC6FF;">fatinedabbarh@gmail.com</a></p>
+    <h2 style="margin-top:0;font-weight:600;">Fatine Dabbarh</h2>
+    <p>
+      Née à Rabat en 1970, Fatine quitte le Maroc pour poursuivre des études littéraires à Paris IV–Sorbonne,
+      où elle se passionne pour l’art et l’histoire de l’art. Au fil des années, ses rencontres avec des artistes
+      et critiques nourrissent une vision personnelle de la création. C’est auprès de l’artiste Sylvie Berrault
+      qu’elle découvre, dans les années 2010, sa voie dans la peinture abstraite et la sculpture. <br/>
+      Installée aujourd’hui à La Chaux-de-Fonds, Fatine explore les liens entre matière, texture et émotion,
+      cherchant dans chaque œuvre un équilibre entre intériorité et mouvement. Ses tableaux, nourris d’opéra
+      et d’intensité, invitent à un voyage intérieur où la couleur devient langage et la matière, mémoire.
+      Elle a exposé notamment à la Galerie Artémis en 2024.
+    </p>
+    <p>
+      Email — <a href="mailto:fatinedabbarh@gmail.com">fatinedabbarh@gmail.com</a>
+    </p>
   </div>
 </div>
 
 <script>
-function openBio(){
-  document.querySelector('.modal-menu').classList.add('show');
+const pages = [...document.querySelectorAll(".page")];
+const seriesPages = [...document.querySelectorAll(".series")];
+
+const prevArrow = document.getElementById("prev-arrow");
+const nextArrow = document.getElementById("next-arrow");
+const arrowToggleBtn = document.getElementById("arrow-toggle-btn");
+const lockBtn = document.getElementById("lock-btn");
+const bioBtn = document.getElementById("bio-btn");
+const bioModal = document.getElementById("bio-modal");
+
+let arrowsEnabled = false;   // controlled by ">"
+let autoLock = false;        // controlled by "□"
+let hoverInterval = null;
+const HOVER_DELAY = 2000;
+
+/* ---------- helpers ---------- */
+function getCurrentPageIndex(){
+  const mid = window.innerHeight / 2;
+  let index = 0;
+  pages.forEach((p,i)=>{
+    const r = p.getBoundingClientRect();
+    if(r.top <= mid && r.bottom >= mid) index = i;
+  });
+  return index;
 }
-function closeBio(){
-  document.querySelector('.modal-menu').classList.remove('show');
+
+function getCurrentSeries(){
+  const p = pages[getCurrentPageIndex()];
+  return p.classList.contains("series") ? p : null;
 }
-document.addEventListener('keydown', function(e){
-  if(e.key === "Escape"){ closeBio(); }
+
+function showImageInSeries(seriesElem, index){
+  const imgs = [...seriesElem.querySelectorAll(".series-image")];
+  if(!imgs.length) return;
+  index = (index + imgs.length) % imgs.length;
+  imgs.forEach((img,i)=>img.classList.toggle("active", i===index));
+}
+
+function changeImage(delta){
+  const seriesElem = getCurrentSeries();
+  if(!seriesElem) return;
+  const imgs = [...seriesElem.querySelectorAll(".series-image")];
+  const active = seriesElem.querySelector(".series-image.active");
+  let idx = imgs.indexOf(active);
+  if(idx === -1) idx = 0;
+  showImageInSeries(seriesElem, idx + delta);
+}
+
+/* ---------- arrows visibility ---------- */
+function updateArrowsVisibility(){
+  const idx = getCurrentPageIndex();
+  const onSeries = idx > 0; // page 0 = cover
+  const show = arrowsEnabled && onSeries;
+
+  prevArrow.classList.toggle("hidden", !show);
+  nextArrow.classList.toggle("hidden", !show);
+}
+
+/* ---------- hover auto-cycle ---------- */
+function startHoverCycle(){
+  if(autoLock) return;          // locked = no auto-cycle
+  clearInterval(hoverInterval);
+  hoverInterval = setInterval(()=>changeImage(1), HOVER_DELAY);
+}
+function stopHoverCycle(){
+  clearInterval(hoverInterval);
+  hoverInterval = null;
+}
+
+seriesPages.forEach(p=>{
+  p.addEventListener("mouseenter", startHoverCycle);
+  p.addEventListener("mouseleave", stopHoverCycle);
 });
-</script>
 
-<script>
-let fullpageMode = false;
+/* ---------- button logic ---------- */
 
-function toggleFullPage(){
-  fullpageMode = !fullpageMode;
+// > toggle arrows
+arrowToggleBtn.addEventListener("click", ()=>{
+  arrowsEnabled = !arrowsEnabled;
+  arrowToggleBtn.textContent = arrowsEnabled ? "×" : ">";
+  updateArrowsVisibility();
+});
 
-  if(fullpageMode){
-    document.body.classList.add("fullpage");
-  } else {
-    document.body.classList.remove("fullpage");
+// □ toggle auto-cycle lock
+lockBtn.addEventListener("click", ()=>{
+  autoLock = !autoLock;
+  lockBtn.classList.toggle("active", autoLock);
+  if(autoLock) stopHoverCycle();
+});
+
+// arrows click
+prevArrow.addEventListener("click", ()=>changeImage(-1));
+nextArrow.addEventListener("click", ()=>changeImage(1));
+
+/* ---------- keyboard navigation ---------- */
+document.addEventListener("keydown", e=>{
+  if(bioModal.classList.contains("show")){
+    if(e.key === "Escape") bioModal.classList.remove("show");
+    return;
   }
-}
-</script>
+  switch(e.key){
+    case "ArrowLeft":  e.preventDefault(); changeImage(-1); break;
+    case "ArrowRight": e.preventDefault(); changeImage(1);  break;
+    case "ArrowUp": {
+      const i = getCurrentPageIndex();
+      if(i>0) pages[i-1].scrollIntoView({behavior:"smooth"});
+      break;
+    }
+    case "ArrowDown": {
+      const i = getCurrentPageIndex();
+      if(i<pages.length-1) pages[i+1].scrollIntoView({behavior:"smooth"});
+      break;
+    }
+    case "Escape":
+      bioModal.classList.remove("show");
+      break;
+  }
+});
 
-<!-- FULL PAGE MODE BUTTON -->
-<button id="full-btn" onclick="toggleFullPage()"></button>
+/* ---------- bio modal ---------- */
+bioBtn.addEventListener("click", ()=>{
+  bioModal.classList.add("show");
+});
+bioModal.addEventListener("click", ()=>{
+  bioModal.classList.remove("show");
+});
+bioModal.querySelector(".modal-inside").addEventListener("click", e=>{
+  e.stopPropagation(); // click inside doesn't close
+});
+
+/* ---------- scroll listener ---------- */
+window.addEventListener("scroll", updateArrowsVisibility);
+
+/* initial state */
+updateArrowsVisibility();
+</script>
 
 </body>
 </html>
-
-
-
-
