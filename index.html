@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <title>Fatine Dabbarh Scroll</title>
-  <link rel="icon" type="image/png" href="favicon2.png">
+  <link rel="icon" type="image/png" href="favicon.png">
 
   <!-- POPPINS FONT -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
@@ -68,7 +68,41 @@ html, body {
   transition: 0.2s;
 }
 #bio-btn:hover { opacity: 0.6; }
+/* FULLPAGE BUTTON (same style as + but left side) */
+#full-btn {
+  position: fixed;
+  top: 22px;
+  left: 22px;
+  font-size: 42px;       /* same size as + */
+  font-weight: 700;      /* same thickness */
+  cursor: pointer;
+  color: black;
+  background: none;
+  border: none;
+  z-index: 10000;
+  transition: 0.2s;
+}
+#full-btn:hover { opacity: 0.6; }
+
+/* -------- FULLPAGE VIEW MODE -------- */
+body.fullpage .page {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+body.fullpage .page img {
+  max-height: 100vh;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+
 </style>
+
+
 
 <script>
 function openBio(){
@@ -109,7 +143,7 @@ document.addEventListener('keydown', e => {
     <p>Née à Rabat en 1970, Fatine quitte le Maroc pour poursuivre des études littéraires à Paris IV–Sorbonne, où elle se passionne pour l’art et l’histoire de l’art.
 
 Au fil des années, ses rencontres avec des artistes et critiques nourrissent une vision personnelle de la création.
-C’est auprès de l’artiste Sylvie Berrault qu’elle découvre, dans les années 2010, sa voie dans la peinture abstraite et la sculpture.<br>
+C’est auprès de l’artiste Sylvie Berrault qu’elle découvre, dans les années 2010, sa voie dans la peinture abstraite et la sculpture.
 Installée aujourd’hui à La Chaux-de-Fonds, Fatine explore les liens entre matière, texture et émotion, cherchant dans chaque œuvre un équilibre entre intériorité et mouvement.
 
 Ses tableaux, nourris d’opéra et d’intensité, invitent à un voyage intérieur où la couleur devient langage et la matière, mémoire.
@@ -130,12 +164,25 @@ document.addEventListener('keydown', function(e){
 });
 </script>
 
+<script>
+let fullpageMode = false;
+
+function toggleFullPage(){
+  fullpageMode = !fullpageMode;
+
+  if(fullpageMode){
+    document.body.classList.add("fullpage");
+  } else {
+    document.body.classList.remove("fullpage");
+  }
+}
+</script>
+
 
   </div>
 </div>
 
+<button id="full-btn" onclick="toggleFullPage()">□</button>
+
 </body>
 </html>
-
-
-
