@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Home / Cover -->
+  <url>
+    <loc>https://fatinedabbarh.com/</loc>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Series anchors (optional but recommended for SEO) -->
+  <url>
+    <loc>https://fatinedabbarh.com/#series1</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://fatinedabbarh.com/#series2</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://fatinedabbarh.com/#series3</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://fatinedabbarh.com/#series4</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Optional biography page reference -->
+  <url>
+    <loc>https://fatinedabbarh.com/#bio</loc>
+  </url>
+
+</urlset>
